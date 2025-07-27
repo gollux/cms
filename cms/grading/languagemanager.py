@@ -66,8 +66,12 @@ def filename_to_language(filename: str, available_languages: list[Language] | No
         return None
     ext = filename[ext_index:]
     names = sorted(language.name
-                   for language in LANGUAGES
+                   for language in available_languages
                    if ext in language.source_extensions)
+    if len(names) == 0:
+        names = sorted(language.name
+                       for language in LANGUAGES
+                       if ext in language.source_extensions)
     return None if len(names) == 0 else get_language(names[0])
 
 
